@@ -6,7 +6,7 @@ import { loggerService } from './services/logger.service.js'
 const app = express()
 //* Express Config:
 app.use(express.static('public'))
-// app.use(cookieParser())
+app.use(cookieParser())
 
 //* Express Routing:
 
@@ -27,7 +27,7 @@ app.get('/api/bug/save', (req, res) => {
         title: req.query.title,
         description: req.query.description,
         severity: +req.query.severity,
-        createdAt: +req.query.createdAt
+        createdAt: req.query.createdAt
     }
     bugService.save(bugToSave)
         .then(savedBug => res.send(savedBug))
@@ -58,6 +58,10 @@ app.get('/api/bug/:bugId/remove', (req, res) => {
             loggerService.error('Cannot remove bug', err)
             res.status(500).send('Cannot remove bug')
         })
+})
+
+app.get('/cookies', (req, res) => {
+    
 })
 
 
