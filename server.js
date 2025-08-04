@@ -15,7 +15,10 @@ app.use(cookieParser())
 //* Read
 app.get('/api/bug', (req, res) => {
     bugService.query()
-        .then(bugs => res.send(bugs))
+        .then(bugs =>{
+            bugService.printBugs(bugs)
+            res.send(bugs)}
+        )
         .catch(err => {
             loggerService.error('Cannot get bugs', err)
             res.status(500).send('Cannot get bugs')

@@ -1,4 +1,5 @@
 import fs from 'fs'
+import PDFDocument from 'pdfkit-table'
 import { makeId, readJsonFile } from "./util.service.js";
 
 const bugs = readJsonFile('data/bug.json')
@@ -7,7 +8,8 @@ export const bugService = {
     query,
     getById,
     remove,
-    save
+    save,
+    printBugs
 }
 
 function query() {
@@ -49,4 +51,29 @@ function _saveBugsToFile() {
             resolve()
         })
     })
+}
+
+function printBugs(bugs) {
+    // init document
+    let doc = new PDFDocument({ margin: 'auto', size: 'A4' })
+    // connect to a write stream
+    doc.pipe(fs.createWriteStream('./bugs.pdf'))
+    createPdf(doc,bugs)
+        .then(() => doc.end()) // close document
+        .catch(err => console.error('PDF creation failed:', err))
+}
+
+function createPdf(doc, bugs){
+    const table = {
+        title: 'Bugs',
+        subtitle: 'Sorted by severity',
+        headers: ['Title', 'Severity', 'Description', 'Created'],
+        rows: bugs.map(bug => [
+            bug.title,
+            bug.severity,
+            bug.description,
+            new Date(bug.createdAt).toLocaleString(),
+        ])
+    }
+    return doc.table(table, { columnsSize: [ 150, 50, 200, 100 ]})
 }
