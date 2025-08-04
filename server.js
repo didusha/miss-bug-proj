@@ -5,7 +5,7 @@ import { loggerService } from './services/logger.service.js'
 
 const app = express()
 //* Express Config:
-// app.use(express.static('public'))
+app.use(express.static('public'))
 // app.use(cookieParser())
 
 //* Express Routing:
