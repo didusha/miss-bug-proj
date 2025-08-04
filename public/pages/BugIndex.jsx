@@ -35,7 +35,7 @@ export function BugIndex() {
             description: prompt('Bug Description?'),
             createdAt: Date.now(),
         }
-        console.log("🚀 ~ onAddBug ~ bug:", bug)
+
 
         bugService.save(bug)
             .then(savedBug => {
