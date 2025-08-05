@@ -15,26 +15,21 @@ export const bugService = {
 }
 
 function query(filterBy) {
-    return axios.get(BASE_URL)
+    return axios.get(BASE_URL, { params: filterBy })
         .then(res => res.data)
-        .then(bugs => {
-
-            if (filterBy.txt) {
-                const regExp = new RegExp(filterBy.txt, 'i')
-                bugs = bugs.filter(bug => regExp.test(bug.title))
-            }
-
-            if (filterBy.minSeverity) {
-                bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
-            }
-
-            return bugs
-        })
 }
 
 function getById(bugId) {
     return axios.get(BASE_URL + bugId)
         .then(res => res.data)
+        .catch(err => {
+            if (err.response && err.response.status === 401) {
+                console.log(err.response.data)
+            } else {
+                console.error('Unexpected error:', err)
+            }
+            throw err
+        })
 }
 
 function remove(bugId) {

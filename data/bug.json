@@ -1,36 +1,57 @@
 [
     {
+        "title": "New Bug change",
+        "description": "Hello bug",
+        "severity": 4,
+        "createdAt": 1754392341121,
+        "_id": "qiRPZ",
+        "labels": []
+    },
+    {
+        "_id": "JORAq",
+        "title": "New Bug",
+        "description": "Hello bug",
+        "severity": 1,
+        "createdAt": 1754391888712,
+        "labels": []
+    },
+    {
         "_id": "6TR3F",
         "title": "Bug 1754314671856",
         "description": "hgjhg",
         "severity": 3,
-        "createdAt": "1754314677683"
+        "createdAt": 1754314677683,
+        "labels": ["dev-branch"]
     },
     {
         "_id": "Eyejf",
         "title": "Bug 1754312226651",
         "description": "now?",
         "severity": 3,
-        "createdAt": "1754312232528"
+        "createdAt": 1754312232528,
+        "labels": ["dev-branch"]
     },
     {
         "_id": "njYEv",
         "title": "Bug 1754311547752",
         "description": "Im a bug",
         "severity": 1,
-        "createdAt": null
+        "createdAt": 1697355828,
+        "labels": ["critical", "need-CR"]
     },
     {
         "_id": "c2xrh",
         "title": "Bug 1754310246375",
         "severity": 5,
-        "createdAt": null
+        "createdAt": 1597355828,
+        "labels": ["need-CR"]
     },
     {
         "_id": "KZMrK",
         "title": "Cannot render bug",
         "description": "problem with server",
         "severity": 5,
-        "createdAt": "1497355828"
+        "createdAt": 1497355828,
+        "labels": ["critical"]
     }
 ]
