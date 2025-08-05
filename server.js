@@ -21,9 +21,10 @@ app.get('/api/bug', (req, res) => {
     const filterBy = {
         txt: req.query.txt || '',
         minSeverity: +req.query.minSeverity || 0,
-        labels: req.query.labels,
-        sortField: req.query.sortField,
-        sortDir: req.query.sortDir
+        labels: req.query.labels || [],
+        sortField: req.query.sortField || '',
+        sortDir: req.query.sortDir || 'false',
+        pageIdx: +req.query.pageIdx || 0
     }
     bugService.query(filterBy)
         .then(bugs => {
@@ -99,6 +100,11 @@ app.delete('/api/bug/:bugId', (req, res) => {
             loggerService.error('Cannot remove bug', err)
             res.status(500).send('Cannot remove bug')
         })
+})
+
+//* Fallback route (For production or when using browser-router)
+app.get('/*all', (req, res) => {
+    res.sendFile(path.resolve('public/index.html'))
 })
 
 // app.get('/', (req, res) => res.send('Hello there Thank you'))

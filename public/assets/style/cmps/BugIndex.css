@@ -6,3 +6,8 @@
     padding-block: 1em;
     border-block-end: 1px solid lightgray;
 }
+
+.pagination{
+    display: flex;
+    justify-content: space-around;
+}

@@ -13,7 +13,8 @@ export const bugService = {
     printBugs
 }
 
-function query(filterBy = { txt: '', minSeverity: 0, labels: [] }) {
+function query(filterBy = { txt: '', minSeverity: 0, labels: [], sortField: 'severity', sortDir: false }) {
+
     let bugs = [...gbugs]
     if (filterBy.txt) {
         const regExp = new RegExp(filterBy.txt, 'i')
@@ -28,20 +29,24 @@ function query(filterBy = { txt: '', minSeverity: 0, labels: [] }) {
         bugs = bugs.filter(bug => bug.severity >= filterBy.minSeverity)
     }
 
-    if (filterBy.pageIdx) {
+    if (filterBy.pageIdx !== undefined) {
         const startIdx = filterBy.pageIdx * PAGE_SIZE
-        carsToReturn = carsToReturn.slice(startIdx, startIdx + PAGE_SIZE)
+        bugs = bugs.slice(startIdx, startIdx + PAGE_SIZE)
     }
 
+    console.log("🚀 ~ query ~ filterBy:", filterBy)
     if (filterBy.sortField) {
+        const dir = filterBy.sortDir === 'true' ? 1 : -1
+
         if (filterBy.sortField === 'createdAt') {
-            bugs.sort((b1, b2) => (b1[filterBy.sortField] - b2[filterBy.sortField]) * filterBy.sortDir)
+            bugs.sort((b1, b2) => dir * (b1.createdAt - b2.createdAt))
         } else if (filterBy.sortField === 'title') {
-            bugs.sort((b1, b2) => b1.title.localeCompare(b2.title) * filterBy.sortDir)
+            bugs.sort((b1, b2) => dir * b1.title.localeCompare(b2.title))
         } else if (filterBy.sortField === 'severity') {
-            bugs.sort((b1, b2) => (b1[filterBy.sortField] - b2[filterBy.sortField]) * filterBy.sortDir)
+            bugs.sort((b1, b2) => dir * (b1.severity - b2.severity))
         }
     }
+
     return Promise.resolve(bugs)
 }
 

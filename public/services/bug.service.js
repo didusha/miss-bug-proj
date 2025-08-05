@@ -14,7 +14,7 @@ export const bugService = {
     getDefaultFilter
 }
 
-function query(filterBy) {
+function query(filterBy = {}) {
     return axios.get(BASE_URL, { params: filterBy })
         .then(res => res.data)
 }
@@ -22,6 +22,7 @@ function query(filterBy) {
 function getById(bugId) {
     return axios.get(BASE_URL + bugId)
         .then(res => res.data)
+        .then(bug => _setNextPrevBugId(bug))
         .catch(err => {
             if (err.response && err.response.status === 401) {
                 console.log(err.response.data)
@@ -33,20 +34,19 @@ function getById(bugId) {
 }
 
 function remove(bugId) {
-    return axios.get(`${BASE_URL}${bugId}/remove`)
+    return axios.delete(BASE_URL + bugId)
         .then(res => res.data)
 }
 
 function save(bug) {
-    let url = BASE_URL + 'save'
-    let queryParams = `?title=${bug.title}&description=${bug.description}&severity=${bug.severity}&createdAt=${bug.createdAt}`
-    if (bug._id) queryParams += `&_id=${bug._id}`
-
-    return axios.get(url + queryParams)
-        .then(res => res.data)
-        .catch(err => {
-            console.log('err:', err)
-        })
+    if (bug._id) {
+        return axios.put(BASE_URL + bug._id, bug)
+            .then(res => res.data)
+    } else {
+        return axios.post(BASE_URL, bug)
+            .then(res => res.data)
+    }
+    // return axios.get(BASE_URL + 'save', { params: bug }).then(res => res.data)
 }
 
 function _createBugs() {
@@ -79,5 +79,29 @@ function _createBugs() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0 }
+    return { txt: '', minSeverity: 0, sortField:'', sortDir: false, labels: [], pageIdx: 0}
 }
+
+function _setNextPrevBugId(bug) {
+    return query().then((bugs) => {
+        const bugIdx = bugs.findIndex((currBug) => currBug._id === bug._id)
+        const nextBug = bugs[bugIdx + 1] ? bugs[bugIdx + 1] : bugs[0]
+        const prevBug = bugs[bugIdx - 1] ? bugs[bugIdx - 1] : bugs[bugs.length - 1]
+        bug.nextBugId = nextBug._id
+        bug.prevBugId = prevBug._id
+        return bug
+    })
+}
+
+// function getFilterFromSearchParams(searchParams) {
+//     const txt = searchParams.get('txt') || ''
+//     const minSeverity = searchParams.get('minSeverity') || ''
+//     const sortField = searchParams.get('sortField') || ''
+//     const sortDir = searchParams.get('sortDir') || -1
+//     return {
+//         txt,
+//         minSeverity,
+//         sortField,
+//         sortDir
+//     }
+// }
