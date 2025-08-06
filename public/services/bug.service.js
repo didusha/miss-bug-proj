@@ -1,5 +1,5 @@
 import { utilService } from './util.service.js'
-import { storageService } from './async-storage.service.js'
+// import { storageService } from './async-storage.service.js'
 
 const STORAGE_KEY = 'bugs'
 const BASE_URL = '/api/bug/'
@@ -22,7 +22,6 @@ function query(filterBy = {}) {
 function getById(bugId) {
     return axios.get(BASE_URL + bugId)
         .then(res => res.data)
-        .then(bug => _setNextPrevBugId(bug))
         .catch(err => {
             if (err.response && err.response.status === 401) {
                 console.log(err.response.data)
@@ -39,7 +38,7 @@ function remove(bugId) {
 }
 
 function save(bug) {
-     // const method = bug._id ? put: post
+    // const method = bug._id ? put: post
     if (bug._id) {
         return axios.put(BASE_URL + bug._id, bug)
             .then(res => res.data)
@@ -48,7 +47,7 @@ function save(bug) {
             .then(res => res.data)
     }
 
-   
+
     // return axios.get(BASE_URL + 'save', { params: bug }).then(res => res.data)
 }
 
@@ -82,18 +81,19 @@ function _createBugs() {
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSeverity: 0, sortField:'', sortDir: false, labels: [], pageIdx: 0}
+    return { txt: '', minSeverity: 0, sortField: '', sortDir: false, labels: [], pageIdx: 0 }
 }
 
 function _setNextPrevBugId(bug) {
-    return query().then((bugs) => {
-        const bugIdx = bugs.findIndex((currBug) => currBug._id === bug._id)
-        const nextBug = bugs[bugIdx + 1] ? bugs[bugIdx + 1] : bugs[0]
-        const prevBug = bugs[bugIdx - 1] ? bugs[bugIdx - 1] : bugs[bugs.length - 1]
-        bug.nextBugId = nextBug._id
-        bug.prevBugId = prevBug._id
-        return bug
-    })
+    return query()
+        .then((bugs) => {
+            const bugIdx = bugs.findIndex(currBug => currBug._id === bug._id)
+            const nextBug = bugs[bugIdx + 1] ? bugs[bugIdx + 1] : bugs[0]
+            const prevBug = bugs[bugIdx - 1] ? bugs[bugIdx - 1] : bugs[bugs.length - 1]
+            bug.nextBugId = nextBug._id
+            bug.prevBugId = prevBug._id
+            return bug
+        })
 }
 
 // function getFilterFromSearchParams(searchParams) {

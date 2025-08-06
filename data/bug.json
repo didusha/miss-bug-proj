@@ -47,10 +47,9 @@
     {
         "_id": "JORAq",
         "title": "New Bug",
-        "description": "Hello bug",
-        "severity": 1,
+        "description": "Hello bugggsss",
+        "severity": 3,
         "createdAt": 1754391888712,
-        "labels": [],
         "creator": {
             "_id": "u102",
             "fullname": "Muki Ba"

@@ -26,7 +26,8 @@ app.get('/api/bug', (req, res) => {
         labels: req.query.labels || [],
         sortField: req.query.sortField || '',
         sortDir: req.query.sortDir || 'false',
-        pageIdx: +req.query.pageIdx || 0
+        pageIdx: +req.query.pageIdx || 0,
+        userId: req.query.userId || ''
     }
     bugService.query(filterBy)
         .then(({ bugs, totalPageCount }) => {
@@ -118,15 +119,13 @@ app.delete('/api/bug/:bugId', (req, res) => {
 })
 
 // USER API
-app.get('/api/user', (req, res) => {
-    console.log(req.cookies)
-    res.end()
-    // userService.query()
-    //     .then(users => res.send(users))
-    //     .catch(err => {
-    //         loggerService.error('Cannot load users', err)
-    //         res.status(400).send('Cannot load users')
-    //     })
+app.get('/api/user', (req, res) => {``
+    userService.query()
+        .then(users => res.send(users))
+        .catch(err => {
+            loggerService.error('Cannot load users', err)
+            res.status(400).send('Cannot load users')
+        })
 })
 
 app.get('/api/user/:userId', (req, res) => {

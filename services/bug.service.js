@@ -41,6 +41,10 @@ function query(filterBy = { txt: '', minSeverity: 0, labels: [], sortField: 'sev
         bugs.sort((b1, b2) => b1.title.localeCompare(b2.title) * dir)
     }
 
+    if(filterBy.userId){
+        bugs = bugs.filter(bug => bug.creator._id === filterBy.userId)
+    }
+
     const totalPageCount = Math.ceil(bugs.length / PAGE_SIZE)
 
     if (filterBy.pageIdx !== null) {

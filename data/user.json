@@ -35,5 +35,11 @@
     "username": "Momo",
     "password": "secret5",
     "_id": "kw9Ow"
+  },
+  {
+    "username": "Didi",
+    "password": "1234",
+    "fullname": "didi didi",
+    "_id": "gEIXe"
   }
 ]
