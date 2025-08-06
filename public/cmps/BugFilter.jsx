@@ -66,7 +66,7 @@ export function BugFilter({ filterBy, onSetFilterBy }) {
                     <input type="checkbox" name="sortDir" checked={sortDir} onChange={handleChange} />
                 </label>
 
-                <select name="labels" multiple onChange={handleChange}>
+                <select name="labels" multiple value={labels} onChange={handleChange}>
                     <option value="critical">Critical</option>
                     <option value="dev-branch">Dev Branch</option>
                     <option value="frontend">Frontend</option>

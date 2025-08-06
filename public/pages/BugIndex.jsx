@@ -16,7 +16,10 @@ export function BugIndex() {
 
     function loadBugs() {
         bugService.query(filterBy)
-            .then(setBugs)
+            .then(res => {
+                // setTotalPageCount(res.totalPageCount)
+                setBugs(res.bugs)
+            })
             .catch(err => showErrorMsg(`Couldn't load bugs - ${err}`))
     }
 

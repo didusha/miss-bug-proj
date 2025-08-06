@@ -15,3 +15,4 @@
 5.8.2025, 13:54:17 - DEBUG - User visited at the following bugs: | []
 5.8.2025, 17:39:38 - DEBUG - User visited at the following bugs: | []
 5.8.2025, 17:39:41 - DEBUG - User visited at the following bugs: | ["6TR3F"]
+6.8.2025, 17:01:34 - ERROR - Cannot save bug | ReferenceError: savedBug is not defined
