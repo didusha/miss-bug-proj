@@ -1,6 +1,7 @@
 
 import express from 'express'
 import cookieParser from 'cookie-parser'
+import path from 'path'
 
 import { bugService } from './services/bug.service.js'
 import { loggerService } from './services/logger.service.js'

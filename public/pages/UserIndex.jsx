@@ -13,7 +13,6 @@ export function UserIndex() {
     }, [])
 
     function loadUsers() {
-
         userService.query()
             .then(res => setUsers(res))
             .catch(err => console.log(err))
